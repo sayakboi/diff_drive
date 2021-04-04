@@ -1,0 +1,4 @@
+<?xml version="1.0"?>
+<launch>
+	<node name="odom_pub" pkg="diff_drive" type="odominfotalker.py" output="screen"/>
+</launch>
