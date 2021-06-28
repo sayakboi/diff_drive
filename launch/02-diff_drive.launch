@@ -30,6 +30,9 @@
 <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"
     respawn="false" output="screen">
 </node>
+<node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher"
+    respawn="false" output="screen">
+</node>
 <!--
 <node name="rqt_robot_steering" pkg="rqt_robot_steering" type="rqt_robot_steering">
   <param name="default_topic" value="/Diff_Drive/diff_drive_controller/cmd_vel"/>
