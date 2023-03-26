@@ -73,6 +73,13 @@
 <!-- ////////////////////////////////////////////////////////////-->
 
 <!-- chassis-->
+ <link name="dummy_link">
+      <visual>
+        <geometry>
+          <sphere radius="0.001"/>
+        </geometry>
+      </visual>
+ </link>
 
  <link name="chassis">
     <visual>
@@ -89,6 +96,12 @@
     </collision>
    <xacro:inertial_matrix mass="5.0"/>
  </link>
+
+ <joint name="dummy_joint" type="fixed">
+    <origin xyz="0 0 0"/>
+    <parent link="dummy_link"/>
+    <child link="chassis"/>
+ </joint>
 
  <gazebo reference="chassis">
     <turnGravityOff>false</turnGravityOff>
