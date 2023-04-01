@@ -8,3 +8,8 @@
  - joint-state-publisher
  - robot-state-publisher
  - gazebo-ros-control
+ - diff-drive-controller
+ - joint-state-controller
+ - robot-state-controller
+ - rosbridge-suite
+ 
