@@ -1,0 +1,5 @@
+sudo docker volume create diffdrv_models 
+
+sudo docker run -it -v diffdrv_models:/assets --name ros-test1 --network ros-net --network-alias ros-net1 myros-image:test1 roscore
+
+sudo docker run --rm -v diffdrv_models:/assets -it --name gzweb-test --network ros-net --link ros-test1:ros-test1 -p 8080:8080 mygzweb:test /bin/bash -c "export GAZEBO_MASTER_URI=http://ros-test1:11345 && export GAZEBO_MODEL_PATH=/root/gzweb/http/client/assets/ && cp -r /usr/share/gazebo-11/models/* http/client/assets/ && cp -r /assets/* http/client/assets && npm start"
