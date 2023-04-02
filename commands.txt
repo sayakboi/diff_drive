@@ -1,5 +1,23 @@
 sudo docker volume create diffdrv_models 
 
-sudo docker run -it -v diffdrv_models:/assets --name ros-test1 --network ros-net --network-alias ros-net1 myros-image:test1 roscore
+sudo docker run -it -v diffdrv_models:/assets --name ros-test1 --network ros-net --network-alias ros-net1 myros-image:test1 /bin/bash -c \
+	"mkdir -p diffdrv_models:/assets && \
+	 export GAZEBO_MASTER_URI=http://ros-test1:11345 && \
+	 cp -r src/diff_drive/meshes/* diffdrv_models:/assets && \
+	 roscore"
 
-sudo docker run --rm -v diffdrv_models:/assets -it --name gzweb-test --network ros-net --link ros-test1:ros-test1 -p 8080:8080 mygzweb:test /bin/bash -c "export GAZEBO_MASTER_URI=http://ros-test1:11345 && export GAZEBO_MODEL_PATH=/root/gzweb/http/client/assets/ && cp -r /usr/share/gazebo-11/models/* http/client/assets/ && cp -r /assets/* http/client/assets && npm start"
+sudo docker run --rm -v diffdrv_models:/assets -it --name gzweb-test --network ros-net --link ros-test1:ros-test1 -p 8080:8080 mygzweb:test /bin/bash -c 	"export GAZEBO_MASTER_URI=http://ros-test1:11345 && \
+	 export GAZEBO_MODEL_PATH=/root/gzweb/http/client/assets/ && \
+	 mkdir -p http/client/assets/diff_drive/meshes/ && \
+	 cp -r /usr/share/gazebo-11/models/* http/client/assets/ && \
+	 cp -r /assets/* http/client/assets/diff_drive/meshes/ && \
+	 npm start"
+
+sudo docker run --rm -it -p 8000:8000 -p 9090:9090 --name python-server my-pyserver:test
+
+
+roslaunch commands
+
+export GAZEBO_MASTER_URI=http://ros-test1:11345 && roslaunch diff_drive web_diff.launch -u $GAZEBO_MASTER_URI
+
+roslaunch rosbridge_server rosbridge_websocket.launch
